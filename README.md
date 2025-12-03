@@ -39,8 +39,8 @@ A beautiful, feature-rich todo list application built with vanilla JavaScript, H
 ### Option 1: Direct Use
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/todo-list.git
-   cd todo-list
+   git clone https://github.com/Ojukwu12/SimpleTODO.git
+   cd SimpleTODO
    ```
 
 2. **Open in browser**
@@ -113,7 +113,7 @@ body {
 ## 📁 Project Structure
 
 ```
-todo-list/
+SimpleTODO/
 ├── training.html       # Main HTML file
 ├── script.js          # JavaScript functionality
 ├── style.css          # Styling and animations
@@ -196,9 +196,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+**Ojukwu12**
+- GitHub: [@Ojukwu12](https://github.com/Ojukwu12)
+- Email: obiefunaokechukwu98@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -208,9 +208,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/todo-list?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/todo-list?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/todo-list)
+![GitHub stars](https://img.shields.io/github/stars/Ojukwu12/SimpleTODO?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Ojukwu12/SimpleTODO?style=social)
+![GitHub issues](https://img.shields.io/github/issues/Ojukwu12/SimpleTODO)
 
 ---
 
