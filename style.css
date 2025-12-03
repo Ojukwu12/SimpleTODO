@@ -379,6 +379,113 @@ button {
   font-weight: bold;
 }
 
+/* === Modal Styles === */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  min-width: 400px;
+  max-width: 90%;
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-body {
+  padding: 24px;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  background-color: #f8f9fa;
+}
+
+.btn-secondary,
+.btn-danger {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #da190b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.btn-secondary:active,
+.btn-danger:active {
+  transform: translateY(0);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* === Responsive Design === */
 @media screen and (max-width: 768px) {
   body {
@@ -387,6 +494,7 @@ button {
 
   .container {
     padding: 20px;
+    margin: 10px;
   }
 
   h1 {
@@ -397,25 +505,73 @@ button {
     flex-direction: column;
   }
 
+  .input-section input {
+    border-radius: 12px;
+  }
+
   .btn-add {
     width: 100%;
+    border-radius: 12px;
   }
 
   .stats-section {
-    flex-direction: column;
-    gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
-  .filter-section {
-    flex-wrap: wrap;
-  }
-
-  .task-item {
+  .stat {
     padding: 12px;
   }
 
-  .btn-text {
-    display: inline;
+  .filter-section {
+    gap: 8px;
+  }
+
+  .filter-btn {
+    flex: 1;
+    padding: 10px;
+  }
+
+  .task-text {
+    max-width: 180px;
+  }
+
+  .button-group {
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  
+  /* Modal responsive */
+  .modal-content {
+    min-width: unset;
+    width: 90%;
+    max-width: 400px;
+    margin: 20px;
+  }
+
+  .modal-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal-body {
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .btn-secondary,
+  .btn-danger {
+    width: 100%;
+    padding: 12px;
   }
 }
 

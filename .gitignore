@@ -73,3 +73,10 @@ pnpm-lock.yaml
 # Cache
 .cache/
 .parcel-cache/
+
+# docs 
+GITHUB_SETUP.md
+README_SETUP.md
+QUICK_START.md
+CONTRIBUTING.md
+LICENSE

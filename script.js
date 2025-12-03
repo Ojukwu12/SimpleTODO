@@ -26,6 +26,12 @@ class TodoApp {
     this.totalTasksEl = document.getElementById('totalTasks');
     this.activeTasksEl = document.getElementById('activeTasks');
     this.completedTasksEl = document.getElementById('completedTasks');
+    
+    // Modal elements
+    this.modal = document.getElementById('confirmModal');
+    this.modalMessage = document.getElementById('modalMessage');
+    this.modalConfirm = document.getElementById('modalConfirm');
+    this.modalCancel = document.getElementById('modalCancel');
   }
 
   bindEvents() {
@@ -46,6 +52,12 @@ class TodoApp {
 
     // Clear completed
     this.clearCompletedBtn.addEventListener('click', () => this.clearCompleted());
+    
+    // Modal events
+    this.modalCancel.addEventListener('click', () => this.hideModal());
+    this.modal.addEventListener('click', (e) => {
+      if (e.target === this.modal) this.hideModal();
+    });
   }
 
   addTask() {
@@ -97,14 +109,17 @@ class TodoApp {
   }
 
   deleteTask(id) {
-    if (confirm('Are you sure you want to delete this task?')) {
-      this.tasks = this.tasks.filter(t => t.id !== id);
-      this.saveTasks();
-      this.renderTasks();
-      this.updateStats();
-      this.checkEmptyState();
-      this.checkClearButton();
-    }
+    this.showModal(
+      'Are you sure you want to delete this task?',
+      () => {
+        this.tasks = this.tasks.filter(t => t.id !== id);
+        this.saveTasks();
+        this.renderTasks();
+        this.updateStats();
+        this.checkEmptyState();
+        this.checkClearButton();
+      }
+    );
   }
 
   editTask(id, newText) {
@@ -120,14 +135,17 @@ class TodoApp {
     const completedCount = this.tasks.filter(t => t.completed).length;
     if (completedCount === 0) return;
     
-    if (confirm(`Delete ${completedCount} completed task${completedCount > 1 ? 's' : ''}?`)) {
-      this.tasks = this.tasks.filter(t => !t.completed);
-      this.saveTasks();
-      this.renderTasks();
-      this.updateStats();
-      this.checkEmptyState();
-      this.checkClearButton();
-    }
+    this.showModal(
+      `Delete ${completedCount} completed task${completedCount > 1 ? 's' : ''}?`,
+      () => {
+        this.tasks = this.tasks.filter(t => !t.completed);
+        this.saveTasks();
+        this.renderTasks();
+        this.updateStats();
+        this.checkEmptyState();
+        this.checkClearButton();
+      }
+    );
   }
 
   getFilteredTasks() {
@@ -283,6 +301,36 @@ class TodoApp {
     } catch (error) {
       console.error('Failed to load tasks from localStorage:', error);
       return [];
+    }
+  }
+
+  // Modal methods
+  showModal(message, onConfirm) {
+    this.modalMessage.textContent = message;
+    this.modal.classList.add('show');
+    
+    // Remove previous confirm handler and add new one
+    const newConfirmBtn = this.modalConfirm.cloneNode(true);
+    this.modalConfirm.parentNode.replaceChild(newConfirmBtn, this.modalConfirm);
+    this.modalConfirm = newConfirmBtn;
+    
+    this.modalConfirm.addEventListener('click', () => {
+      onConfirm();
+      this.hideModal();
+    });
+    
+    // Close on Escape key
+    this.escapeHandler = (e) => {
+      if (e.key === 'Escape') this.hideModal();
+    };
+    document.addEventListener('keydown', this.escapeHandler);
+  }
+
+  hideModal() {
+    this.modal.classList.remove('show');
+    if (this.escapeHandler) {
+      document.removeEventListener('keydown', this.escapeHandler);
+      this.escapeHandler = null;
     }
   }
 }
