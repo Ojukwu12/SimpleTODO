@@ -26,6 +26,8 @@ class TodoApp {
     this.totalTasksEl = document.getElementById('totalTasks');
     this.activeTasksEl = document.getElementById('activeTasks');
     this.completedTasksEl = document.getElementById('completedTasks');
+    this.toast = document.getElementById('toast');
+    this.a11yLive = document.getElementById('a11yLive');
     
     // Modal elements
     this.modal = document.getElementById('confirmModal');
@@ -58,6 +60,20 @@ class TodoApp {
     this.modal.addEventListener('click', (e) => {
       if (e.target === this.modal) this.hideModal();
     });
+
+    // Keyboard shortcuts: Ctrl/Cmd+K focuses input, '/' focuses input too
+    document.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement && document.activeElement.tagName;
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        this.taskInput.focus();
+      }
+
+      if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+        e.preventDefault();
+        this.taskInput.focus();
+      }
+    });
   }
 
   addTask() {
@@ -86,6 +102,8 @@ class TodoApp {
     this.taskInput.classList.remove('error');
     this.addTaskBtn.classList.add('success-pulse');
     setTimeout(() => this.addTaskBtn.classList.remove('success-pulse'), 300);
+
+    this.showToast('Task added');
   }
 
   showInputError() {
@@ -118,6 +136,7 @@ class TodoApp {
         this.updateStats();
         this.checkEmptyState();
         this.checkClearButton();
+        this.showToast('Task deleted');
       }
     );
   }
@@ -144,6 +163,7 @@ class TodoApp {
         this.updateStats();
         this.checkEmptyState();
         this.checkClearButton();
+        this.showToast(`${completedCount} completed removed`);
       }
     );
   }
@@ -331,6 +351,25 @@ class TodoApp {
     if (this.escapeHandler) {
       document.removeEventListener('keydown', this.escapeHandler);
       this.escapeHandler = null;
+    }
+  }
+
+  // Toast / accessibility helpers
+  showToast(message, duration = 2200) {
+    try {
+      if (this.toast) {
+        this.toast.textContent = message;
+        this.toast.classList.add('show');
+        // reflect to screen readers
+        if (this.a11yLive) this.a11yLive.textContent = message;
+        clearTimeout(this._toastTimeout);
+        this._toastTimeout = setTimeout(() => {
+          this.toast.classList.remove('show');
+        }, duration);
+      }
+    } catch (err) {
+      // ignore toast errors
+      console.error('Toast error', err);
     }
   }
 }
